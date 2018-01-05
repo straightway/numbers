@@ -19,9 +19,7 @@ apply plugin: 'git-repo'
 
 repositories {
     mavenCentral()
-    maven { url file("file://${System.properties['user.home']}/.gitRepos/repo/repo") }
-    git("https://github.com/straightway/repo.git", "repo")
-
+    maven { url "https://straightway.github.io/repo" }
 }
 
 dependencies {
