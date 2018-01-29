@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 github.com/straightway
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package straightway.numbers
 
 import straightway.error.Panic
@@ -32,7 +48,7 @@ data class NumberInfo(
         operator fun get(n: Number): NumberInfo = this[n::class]
 
         operator fun get(type: KClass<*>): NumberInfo =
-            _types[type] ?: throw Panic("Unsupported number type: $type")
+                types[type] ?: throw Panic("Unsupported number type: $type")
 
         @Suppress("UNCHECKED_CAST")
         private fun <T: Number> op(op: T.(T) -> Number) : Number.(Number) -> Number =
@@ -43,7 +59,7 @@ data class NumberInfo(
                 get(a).unifyIfPossible(result)
             }
 
-        private var _types = mapOf(
+        private var types = mapOf(
             Pair(Byte::class, NumberInfo(
                 prio = 0,
                 min = Byte.MIN_VALUE,
