@@ -27,124 +27,124 @@ import java.math.BigInteger
 class ArithmeticTest {
 
     @Test fun plus() =
-        testArithmeticOperator { a, b ->
-            expected = a.toInt() + b.toInt()
-            actual = a + b
-        }
+            testArithmeticOperator { a, b ->
+                expected = a.toInt() + b.toInt()
+                actual = a + b
+            }
 
     @Test fun minus() =
-        testArithmeticOperator { a, b ->
-            expected = a.toInt() - b.toInt()
-            actual = a - b
-        }
+            testArithmeticOperator { a, b ->
+                expected = a.toInt() - b.toInt()
+                actual = a - b
+            }
 
     @Test fun mul() =
-        testArithmeticOperator { a, b ->
-            expected = a.toInt() * b.toInt()
-            actual = a * b
-        }
+            testArithmeticOperator { a, b ->
+                expected = a.toInt() * b.toInt()
+                actual = a * b
+            }
 
     @Test fun div() =
-        testArithmeticOperator { a, b ->
-            expected = a.toInt() / b.toInt()
-            actual = a / b
-        }
+            testArithmeticOperator { a, b ->
+                expected = a.toInt() / b.toInt()
+                actual = a / b
+            }
 
     @Test fun rem() =
-        testArithmeticOperator { a, b ->
-            expected = a.toInt() % b.toInt()
-            actual = a % b
-        }
+            testArithmeticOperator { a, b ->
+                expected = a.toInt() % b.toInt()
+                actual = a % b
+            }
 
     @Test fun unaryPlus() =
-        testArithmeticOperator { a ->
-            expected = a.toInt()
-            actual = +a
-        }
+            testArithmeticOperator { a ->
+                expected = a.toInt()
+                actual = +a
+            }
 
     @Test fun unaryMinus() =
-        testArithmeticOperator { a ->
-            expected = -a.toInt()
-            actual = -a
-        }
+            testArithmeticOperator { a ->
+                expected = -a.toInt()
+                actual = -a
+            }
 
     @Test fun round_general() =
-        testArithmeticOperator { a ->
-            expected = rint(a.toDouble()).toInt()
-            actual = round(a)
-        }
+            testArithmeticOperator { a ->
+                expected = rint(a.toDouble()).toInt()
+                actual = round(a)
+            }
 
     @Test fun round_Float_upPositive() =
-        TestOpResult {
-            expected = 5
-            actual = round(nextUp(4.5F))
-        }.check()
+            TestOpResult {
+                expected = 5
+                actual = round(nextUp(4.5F))
+            }.check()
 
     @Test fun round_Float_downPositive() =
-        TestOpResult {
-            expected = 4
-            actual = round(nextDown(4.5F))
-        }.check()
+            TestOpResult {
+                expected = 4
+                actual = round(nextDown(4.5F))
+            }.check()
 
     @Test fun round_Float_upNegative() =
-        TestOpResult {
-            expected = -4
-            actual = round(nextUp(-4.5F))
-        }.check()
+            TestOpResult {
+                expected = -4
+                actual = round(nextUp(-4.5F))
+            }.check()
 
     @Test fun round_Float_downNegative() =
-        TestOpResult {
-            expected = -5
-            actual = round(nextDown(-4.5F))
-        }.check()
+            TestOpResult {
+                expected = -5
+                actual = round(nextDown(-4.5F))
+            }.check()
 
     @Test fun round_Double_upPositive() =
-        TestOpResult {
-            expected = 5
-            actual = round(nextUp(4.5))
-        }.check()
+            TestOpResult {
+                expected = 5
+                actual = round(nextUp(4.5))
+            }.check()
 
     @Test fun round_Double_downPositive() =
-        TestOpResult {
-            expected = 4
-            actual = round(nextDown(4.5))
-        }.check()
+            TestOpResult {
+                expected = 4
+                actual = round(nextDown(4.5))
+            }.check()
 
     @Test fun round_Double_upNegative() =
-        TestOpResult {
-            expected = -4
-            actual = round(nextUp(-4.5))
-        }.check()
+            TestOpResult {
+                expected = -4
+                actual = round(nextUp(-4.5))
+            }.check()
 
     @Test fun round_Double_downNegative() =
-        TestOpResult {
-            expected = -5
-            actual = round(nextDown(-4.5))
-        }.check()
+            TestOpResult {
+                expected = -5
+                actual = round(nextDown(-4.5))
+            }.check()
 
     @Test fun round_BigDecimal_upPositive() =
-        TestOpResult {
-            expected = 5
-            actual = round(BigDecimal("4.5"))
-        }.check()
+            TestOpResult {
+                expected = 5
+                actual = round(BigDecimal("4.5"))
+            }.check()
 
     @Test fun round_BigDecimal_downPositive() =
-        TestOpResult {
-            expected = 4
-            actual = round(BigDecimal("4.499999999999999"))
-        }.check()
+            TestOpResult {
+                expected = 4
+                actual = round(BigDecimal("4.499999999999999"))
+            }.check()
 
     @Test fun round_BigDecimal_upNegative() =
-        TestOpResult {
-            expected = -4
-            actual = round(BigDecimal("-4.49999999999999"))
-        }.check()
+            TestOpResult {
+                expected = -4
+                actual = round(BigDecimal("-4.49999999999999"))
+            }.check()
 
     @Test fun round_BigDecimal_downNegative() =
-        TestOpResult {
-            expected = -5
-            actual = round(BigDecimal("-4.5"))
-        }.check()
+            TestOpResult {
+                expected = -5
+                actual = round(BigDecimal("-4.5"))
+            }.check()
 
     @Test fun bigDecimalDivisionPrecision() {
         val a = 1.0
@@ -196,10 +196,10 @@ class ArithmeticTest {
 
     private companion object {
         fun testArithmeticOperator(test: TestOpResult.(Number, Number) -> Unit) =
-            testValues.forEach { a -> testArithmeticOperator { b -> test(a, b) } }
+                testValues.forEach { a -> testArithmeticOperator { b -> test(a, b) } }
 
         fun testArithmeticOperator(test: TestOpResult.(Number) -> Unit) =
-            testValues.forEach { TestOpResult { test(it) }.check() }
+                testValues.forEach { TestOpResult { test(it) }.check() }
 
         private fun testIntegerValueBorder(
             aspect: String,
@@ -217,27 +217,26 @@ class ArithmeticTest {
         }
 
         private fun testTypeAdherence(op: Number.(Number) -> Number) =
-            testValues.forEach {
-                assertEquals(it::class, it.op(it)::class)
-            }
+                testValues.forEach {
+                    assertEquals(it::class, it.op(it)::class)
+                }
 
         private fun testComparison(tester: (Array<Number>) -> Boolean) =
-            testValues.forEach {
-                val toTargetType = NumberInfo[it].unify
-                val args = arrayOf(1.toTargetType(), 2.toTargetType())
-                assertTrue(tester(args)) { "Testing ${it::class}" }
-            }
+                testValues.forEach {
+                    val toTargetType = NumberInfo[it].unify
+                    val args = arrayOf(1.toTargetType(), 2.toTargetType())
+                    assertTrue(tester(args)) { "Testing ${it::class}" }
+                }
 
         val testValues = arrayOf<Number>(
-            1.toByte(),
-            2.toShort(),
-            3,
-            4L,
-            5.0F,
-            6.0,
-            BigInteger("7"),
-            BigDecimal("8.0")
-        )
+                1.toByte(),
+                2.toShort(),
+                3,
+                4L,
+                5.0F,
+                6.0,
+                BigInteger("7"),
+                BigDecimal("8.0"))
     }
 
     //endregion
