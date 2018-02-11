@@ -13,6 +13,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+@file:Suppress("TooManyFunctions")
+
 package straightway.numbers
 
 operator fun <T : Number> T.unaryPlus() = this

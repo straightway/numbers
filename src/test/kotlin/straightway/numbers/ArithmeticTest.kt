@@ -156,7 +156,9 @@ class ArithmeticTest {
     }
 
     @Test fun bigDecimal_toBigInteger() {
-        val bi = BigInteger("12345678901234567890123456789012345789012345678901234567890123456789012345678901234578901234567890")
+        val bi = BigInteger(
+                "1234567890123456789012345678901234578901234567890" +
+                "1234567890123456789012345678901234578901234567890")
         val bd = BigDecimal("1")
         val r = bi * bd
         assertEquals(bi, (r as BigDecimal).toBigInteger())
