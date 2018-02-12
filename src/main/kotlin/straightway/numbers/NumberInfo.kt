@@ -22,6 +22,9 @@ import java.math.BigInteger
 import java.math.RoundingMode
 import kotlin.reflect.KClass
 
+/**
+ * Information record for a number type.
+ */
 data class NumberInfo(
     val prio: Int,
     val unify: Number.() -> Number,
