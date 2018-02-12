@@ -26,8 +26,12 @@ class UnifyTest {
             for ((j, b) in supportedTypes.withIndex()) {
                 val unified = unify(a, b)
                 val expectedType = if (i < j) b::class else a::class
-                assertEquals(expectedType, unified.first::class) { "unifying ${a::class} and ${b::class}" }
-                assertEquals(expectedType, unified.second::class) { "unifying ${a::class} and ${b::class}" }
+                assertEquals(expectedType, unified.first::class) {
+                    "unifying ${a::class} and ${b::class}"
+                }
+                assertEquals(expectedType, unified.second::class) {
+                    "unifying ${a::class} and ${b::class}"
+                }
                 assertEquals(a.toDouble(), unified.first.toDouble())
                 assertEquals(b.toDouble(), unified.second.toDouble())
             }

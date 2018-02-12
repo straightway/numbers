@@ -26,127 +26,148 @@ import java.math.BigInteger
 
 class ArithmeticTest {
 
-    @Test fun plus() =
+    @Test
+    fun plus() =
             testArithmeticOperator { a, b ->
                 expected = a.toInt() + b.toInt()
                 actual = a + b
             }
 
-    @Test fun minus() =
+    @Test
+    fun minus() =
             testArithmeticOperator { a, b ->
                 expected = a.toInt() - b.toInt()
                 actual = a - b
             }
 
-    @Test fun mul() =
+    @Test
+    fun mul() =
             testArithmeticOperator { a, b ->
                 expected = a.toInt() * b.toInt()
                 actual = a * b
             }
 
-    @Test fun div() =
+    @Test
+    fun div() =
             testArithmeticOperator { a, b ->
                 expected = a.toInt() / b.toInt()
                 actual = a / b
             }
 
-    @Test fun rem() =
+    @Test
+    fun rem() =
             testArithmeticOperator { a, b ->
                 expected = a.toInt() % b.toInt()
                 actual = a % b
             }
 
-    @Test fun unaryPlus() =
+    @Test
+    fun unaryPlus() =
             testArithmeticOperator { a ->
                 expected = a.toInt()
                 actual = +a
             }
 
-    @Test fun unaryMinus() =
+    @Test
+    fun unaryMinus() =
             testArithmeticOperator { a ->
                 expected = -a.toInt()
                 actual = -a
             }
 
-    @Test fun round_general() =
+    @Test
+    fun round_general() =
             testArithmeticOperator { a ->
                 expected = rint(a.toDouble()).toInt()
                 actual = round(a)
             }
 
-    @Test fun round_Float_upPositive() =
+    @Test
+    fun round_Float_upPositive() =
             TestOpResult {
                 expected = 5
                 actual = round(nextUp(4.5F))
             }.check()
 
-    @Test fun round_Float_downPositive() =
+    @Test
+    fun round_Float_downPositive() =
             TestOpResult {
                 expected = 4
                 actual = round(nextDown(4.5F))
             }.check()
 
-    @Test fun round_Float_upNegative() =
+    @Test
+    fun round_Float_upNegative() =
             TestOpResult {
                 expected = -4
                 actual = round(nextUp(-4.5F))
             }.check()
 
-    @Test fun round_Float_downNegative() =
+    @Test
+    fun round_Float_downNegative() =
             TestOpResult {
                 expected = -5
                 actual = round(nextDown(-4.5F))
             }.check()
 
-    @Test fun round_Double_upPositive() =
+    @Test
+    fun round_Double_upPositive() =
             TestOpResult {
                 expected = 5
                 actual = round(nextUp(4.5))
             }.check()
 
-    @Test fun round_Double_downPositive() =
+    @Test
+    fun round_Double_downPositive() =
             TestOpResult {
                 expected = 4
                 actual = round(nextDown(4.5))
             }.check()
 
-    @Test fun round_Double_upNegative() =
+    @Test
+    fun round_Double_upNegative() =
             TestOpResult {
                 expected = -4
                 actual = round(nextUp(-4.5))
             }.check()
 
-    @Test fun round_Double_downNegative() =
+    @Test
+    fun round_Double_downNegative() =
             TestOpResult {
                 expected = -5
                 actual = round(nextDown(-4.5))
             }.check()
 
-    @Test fun round_BigDecimal_upPositive() =
+    @Test
+    fun round_BigDecimal_upPositive() =
             TestOpResult {
                 expected = 5
                 actual = round(BigDecimal("4.5"))
             }.check()
 
-    @Test fun round_BigDecimal_downPositive() =
+    @Test
+    fun round_BigDecimal_downPositive() =
             TestOpResult {
                 expected = 4
                 actual = round(BigDecimal("4.499999999999999"))
             }.check()
 
-    @Test fun round_BigDecimal_upNegative() =
+    @Test
+    fun round_BigDecimal_upNegative() =
             TestOpResult {
                 expected = -4
                 actual = round(BigDecimal("-4.49999999999999"))
             }.check()
 
-    @Test fun round_BigDecimal_downNegative() =
+    @Test
+    fun round_BigDecimal_downNegative() =
             TestOpResult {
                 expected = -5
                 actual = round(BigDecimal("-4.5"))
             }.check()
 
-    @Test fun bigDecimalDivisionPrecision() {
+    @Test
+    fun bigDecimalDivisionPrecision() {
         val a = 1.0
         val b = 7e10
         val expectedResult = BigDecimal(a / b)
@@ -155,35 +176,83 @@ class ArithmeticTest {
         assertTrue(difference.abs() < BigDecimal(1e-20))
     }
 
-    @Test fun bigDecimal_toBigInteger() {
+    @Test
+    fun bigDecimal_toBigInteger() {
         val bi = BigInteger(
                 "1234567890123456789012345678901234578901234567890" +
-                "1234567890123456789012345678901234578901234567890")
+                        "1234567890123456789012345678901234578901234567890")
         val bd = BigDecimal("1")
         val r = bi * bd
         assertEquals(bi, (r as BigDecimal).toBigInteger())
     }
 
-    @Test fun typeOverflow_plus() = testIntegerValueBorder("Overflow", { Pair(max, max) }, { this + it })
-    @Test fun typeUnderflow_plus() = testIntegerValueBorder("Underflow", { Pair(min, min) }, { this + it })
-    @Test fun typeOverflow_minus() = testIntegerValueBorder("Overflow", { Pair(max, min) }, { this - it })
-    @Test fun typeUnderflow_minus() = testIntegerValueBorder("Underflow", { Pair(min, max) }, { this - it })
-    @Test fun typeOverflow_times() = testIntegerValueBorder("Overflow", { Pair(max, max) }, { this * it })
-    @Test fun typeUnderflow_times() = testIntegerValueBorder("Underflow", { Pair(min, min) }, { this * it })
     @Test
-    fun typeOverflow_div() = testIntegerValueBorder("Overflow", { Pair(min, (-1).toByte()) }, { this / it })
+    fun typeOverflow_plus() =
+            testIntegerValueBorder("Overflow", { Pair(max, max) }, { this + it })
 
-    @Test fun typeAdherence_plus() = testTypeAdherence { this + it }
-    @Test fun typeAdherence_minus() = testTypeAdherence { this - it }
-    @Test fun typeAdherence_times() = testTypeAdherence { this * it }
-    @Test fun typeAdherence_div() = testTypeAdherence { this / it }
-    @Test fun typeAdherence_rem() = testTypeAdherence { this % it }
-    @Test fun typeAdherence_round() = testTypeAdherence { round(this) }
+    @Test
+    fun typeUnderflow_plus() =
+            testIntegerValueBorder("Underflow", { Pair(min, min) }, { this + it })
 
-    @Test fun comparison_less() = testComparison { it[0] < it[1] }
-    @Test fun comparison_lessEqual() = testComparison { it[0] <= it[1] && it[0] <= it[0] }
-    @Test fun comparison_greater() = testComparison { it[1] > it[0] }
-    @Test fun comparison_greaterEqual() = testComparison { it[1] >= it[0] && it[0] >= it[0] }
+    @Test
+    fun typeOverflow_minus() =
+            testIntegerValueBorder("Overflow", { Pair(max, min) }, { this - it })
+
+    @Test
+    fun typeUnderflow_minus() =
+            testIntegerValueBorder("Underflow", { Pair(min, max) }, { this - it })
+
+    @Test
+    fun typeOverflow_times() =
+            testIntegerValueBorder("Overflow", { Pair(max, max) }, { this * it })
+
+    @Test
+    fun typeUnderflow_times() =
+            testIntegerValueBorder("Underflow", { Pair(min, min) }, { this * it })
+
+    @Test
+    fun typeOverflow_div() =
+            testIntegerValueBorder("Overflow", { Pair(min, (-1).toByte()) }, { this / it })
+
+    @Test
+    fun typeAdherence_plus() =
+            testTypeAdherence { this + it }
+
+    @Test
+    fun typeAdherence_minus() =
+            testTypeAdherence { this - it }
+
+    @Test
+    fun typeAdherence_times() =
+            testTypeAdherence { this * it }
+
+    @Test
+    fun typeAdherence_div() =
+            testTypeAdherence { this / it }
+
+    @Test
+    fun typeAdherence_rem() =
+            testTypeAdherence { this % it }
+
+    @Test
+    fun typeAdherence_round() =
+            testTypeAdherence { round(this) }
+
+    @Test
+    fun comparison_less() =
+            testComparison { it[0] < it[1] }
+
+    @Test
+    fun comparison_lessEqual() =
+            testComparison { it[0] <= it[1] && it[0] <= it[0] }
+
+    @Test
+    fun comparison_greater() =
+            testComparison { it[1] > it[0] }
+
+    @Test
+    fun comparison_greaterEqual() =
+            testComparison { it[1] >= it[0] && it[0] >= it[0] }
 
     //region Private
 
@@ -192,7 +261,7 @@ class ArithmeticTest {
         var actual: Number = 0
         fun check() {
             tester()
-            assertEquals (expected, actual.toInt())
+            assertEquals(expected, actual.toInt())
         }
     }
 
@@ -204,14 +273,15 @@ class ArithmeticTest {
                 testValues.forEach { TestOpResult { test(it) }.check() }
 
         private fun testIntegerValueBorder(
-            aspect: String,
-            testValueGetter: NumberInfo.() -> Pair<Number?, Number?>,
-            testedOperation: Number.(Number) -> Number) {
+                aspect: String,
+                testValueGetter: NumberInfo.() -> Pair<Number?, Number?>,
+                testedOperation: Number.(Number) -> Number) {
 
             testValues.forEach {
                 val (extremeA, extremeB) = NumberInfo[it].testValueGetter()
                 if (extremeA != null && extremeB != null) {
-                    val expected = BigInteger(extremeA.toString()).testedOperation(BigInteger(extremeB.toString()))
+                    val expected = BigInteger(extremeA.toString())
+                            .testedOperation(BigInteger(extremeB.toString()))
                     val actual = BigInteger(extremeA.testedOperation(extremeB).toString())
                     assertEquals(expected, actual) { "$aspect test for type ${it::class} failed" }
                 }

@@ -149,7 +149,10 @@ data class NumberInfo(
                             try {
                                 this.divide(it)
                             } catch (_: ArithmeticException) {
-                                this.divide(it, Math.max(32, Math.max(scale(), it.scale())), RoundingMode.HALF_UP)
+                                this.divide(
+                                        it,
+                                        Math.max(32, Math.max(scale(), it.scale())),
+                                        RoundingMode.HALF_UP)
                             }
                         },
                         rem = op<BigDecimal> { this.remainder(it) },

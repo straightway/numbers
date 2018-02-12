@@ -37,7 +37,8 @@ fun unify(a: Number, b: Number): Pair<Number, Number> {
 }
 
 @Suppress("UNCHECKED_CAST")
-private fun <T : Number> Pair<Number, Number>.apply(op: NumberInfo.() -> Number.(Number) -> Number): T {
+private fun <T : Number> Pair<Number, Number>.apply(
+        op: NumberInfo.() -> Number.(Number) -> Number): T {
     val numberInfo = NumberInfo[this.first]
     return this.first.(numberInfo.op())(this.second) as T
 }
