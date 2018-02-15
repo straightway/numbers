@@ -26,17 +26,18 @@ import kotlin.reflect.KClass
  * Information record for a number type.
  */
 data class NumberInfo(
-    val prio: Int,
-    val unify: Number.() -> Number,
-    val round: Number.() -> Number,
-    val plus: Number.(Number) -> Number,
-    val minus: Number.(Number) -> Number,
-    val times: Number.(Number) -> Number,
-    val div: Number.(Number) -> Number,
-    val rem: Number.(Number) -> Number,
-    val compare: Number.(Number) -> Int,
-    val min: Number? = null,
-    val max: Number? = null) {
+        val prio: Int,
+        val unify: Number.() -> Number,
+        val round: Number.() -> Number,
+        val plus: Number.(Number) -> Number,
+        val minus: Number.(Number) -> Number,
+        val times: Number.(Number) -> Number,
+        val div: Number.(Number) -> Number,
+        val rem: Number.(Number) -> Number,
+        val compare: Number.(Number) -> Int,
+        val min: Number? = null,
+        val max: Number? = null
+) {
 
     private inline val hasMinMax
         get() = min != null && max != null

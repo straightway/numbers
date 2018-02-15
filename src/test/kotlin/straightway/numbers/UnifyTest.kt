@@ -21,7 +21,8 @@ import java.math.BigInteger
 
 class UnifyTest {
 
-    @Test fun numbersAreUnifiedToLargerType() {
+    @Test
+    fun numbersAreUnifiedToLargerType() {
         for ((i, a) in supportedTypes.withIndex())
             for ((j, b) in supportedTypes.withIndex()) {
                 val unified = unify(a, b)

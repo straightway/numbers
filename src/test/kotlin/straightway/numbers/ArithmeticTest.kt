@@ -275,7 +275,8 @@ class ArithmeticTest {
         private class IntegerValueBorderTest(
                 val aspect: String,
                 val testValueGetter: NumberInfo.() -> Pair<Number?, Number?>,
-                val testedOperation: Number.(Number) -> Number) {
+                val testedOperation: Number.(Number) -> Number
+        ) {
 
             fun test() =
                     testValues.forEach {
