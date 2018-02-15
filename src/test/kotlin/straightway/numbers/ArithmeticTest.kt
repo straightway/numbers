@@ -188,31 +188,31 @@ class ArithmeticTest {
 
     @Test
     fun typeOverflow_plus() =
-            testIntegerValueBorder("Overflow", { Pair(max, max) }, { this + it })
+            IntegerValueBorderTest("Overflow", { Pair(max, max) }, { this + it }).test()
 
     @Test
     fun typeUnderflow_plus() =
-            testIntegerValueBorder("Underflow", { Pair(min, min) }, { this + it })
+            IntegerValueBorderTest("Underflow", { Pair(min, min) }, { this + it }).test()
 
     @Test
     fun typeOverflow_minus() =
-            testIntegerValueBorder("Overflow", { Pair(max, min) }, { this - it })
+            IntegerValueBorderTest("Overflow", { Pair(max, min) }, { this - it }).test()
 
     @Test
     fun typeUnderflow_minus() =
-            testIntegerValueBorder("Underflow", { Pair(min, max) }, { this - it })
+            IntegerValueBorderTest("Underflow", { Pair(min, max) }, { this - it }).test()
 
     @Test
     fun typeOverflow_times() =
-            testIntegerValueBorder("Overflow", { Pair(max, max) }, { this * it })
+            IntegerValueBorderTest("Overflow", { Pair(max, max) }, { this * it }).test()
 
     @Test
     fun typeUnderflow_times() =
-            testIntegerValueBorder("Underflow", { Pair(min, min) }, { this * it })
+            IntegerValueBorderTest("Underflow", { Pair(min, min) }, { this * it }).test()
 
     @Test
     fun typeOverflow_div() =
-            testIntegerValueBorder("Overflow", { Pair(min, (-1).toByte()) }, { this / it })
+            IntegerValueBorderTest("Overflow", { Pair(min, (-1).toByte()) }, { this / it }).test()
 
     @Test
     fun typeAdherence_plus() =
@@ -272,20 +272,23 @@ class ArithmeticTest {
         fun testArithmeticOperator(test: TestOpResult.(Number) -> Unit) =
                 testValues.forEach { TestOpResult { test(it) }.check() }
 
-        private fun testIntegerValueBorder(
-                aspect: String,
-                testValueGetter: NumberInfo.() -> Pair<Number?, Number?>,
-                testedOperation: Number.(Number) -> Number) {
+        private class IntegerValueBorderTest(
+                val aspect: String,
+                val testValueGetter: NumberInfo.() -> Pair<Number?, Number?>,
+                val testedOperation: Number.(Number) -> Number) {
 
-            testValues.forEach {
-                val (extremeA, extremeB) = NumberInfo[it].testValueGetter()
-                if (extremeA != null && extremeB != null) {
-                    val expected = BigInteger(extremeA.toString())
-                            .testedOperation(BigInteger(extremeB.toString()))
-                    val actual = BigInteger(extremeA.testedOperation(extremeB).toString())
-                    assertEquals(expected, actual) { "$aspect test for type ${it::class} failed" }
-                }
-            }
+            fun test() =
+                    testValues.forEach {
+                        val (extremeA, extremeB) = NumberInfo[it].testValueGetter()
+                        if (extremeA != null && extremeB != null) {
+                            val expected = BigInteger(extremeA.toString())
+                                    .testedOperation(BigInteger(extremeB.toString()))
+                            val actual = BigInteger(extremeA.testedOperation(extremeB).toString())
+                            assertEquals(expected, actual) {
+                                "$aspect test for type ${it::class} failed"
+                            }
+                        }
+                    }
         }
 
         private fun testTypeAdherence(op: Number.(Number) -> Number) =
