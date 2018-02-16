@@ -18,27 +18,44 @@ package straightway.numbers
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.math.BigInteger
+import kotlin.reflect.KClass
 
 class UnifyTest {
 
     @Test
-    fun numbersAreUnifiedToLargerType() {
-        for ((i, a) in supportedTypes.withIndex())
-            for ((j, b) in supportedTypes.withIndex()) {
-                val unified = unify(a, b)
-                val expectedType = if (i < j) b::class else a::class
-                assertEquals(expectedType, unified.first::class) {
-                    "unifying ${a::class} and ${b::class}"
+    fun numbersAreUnifiedToLargerType() = testCases.forEach {
+        val unified = unify(it.numbers.first, it.numbers.second)
+        it.assertExpectedTypes(unified)
+        it.assertSameDoubleRepresentationAs(unified)
+    }
+
+    private data class TestCase(
+            val numbers: Pair<Number, Number>,
+            private val expectedType: KClass<*>
+    ) {
+        fun assertExpectedTypes(toCheck: Pair<Number, Number>) =
+                toCheck.toList().forEach {
+                    assertEquals(expectedType, it::class) {
+                        "unifying ${numbers.first::class} and ${numbers.second::class}, " +
+                                "found ${it::class} instead of $expectedType"
+                    }
                 }
-                assertEquals(expectedType, unified.second::class) {
-                    "unifying ${a::class} and ${b::class}"
+
+        fun assertSameDoubleRepresentationAs(other: Pair<Number, Number>) =
+                numbers.toList().zip(other.toList()).forEach {
+                    assertEquals(it.first.toDouble(), it.second.toDouble())
                 }
-                assertEquals(a.toDouble(), unified.first.toDouble())
-                assertEquals(b.toDouble(), unified.second.toDouble())
-            }
     }
 
     private companion object {
+        val testCases: Iterable<TestCase> get() {
+            val result = mutableListOf<TestCase>()
+            for ((i, a) in supportedTypes.withIndex())
+                for ((j, b) in supportedTypes.withIndex())
+                    result += TestCase(Pair(a, b), if (i < j) b::class else a::class)
+            return result
+        }
+
         val supportedTypes = arrayOf<Number>(
                 83.toByte(),
                 83.toShort(),
