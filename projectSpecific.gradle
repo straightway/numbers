@@ -17,5 +17,6 @@ ext.uploadToRepository = true
 
 dependencies {
     compile straightway('error')
+    testCompile straightway('testing')
     testCompile mockito()
 }
