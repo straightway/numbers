@@ -23,5 +23,5 @@ To include this library in a gradle build, add
 Then you can simply configure in your dependencies:
 
     dependencies {
-        compile "straightway:numbers:0.3+"
+        compile "straightway:numbers<version>"
     }
