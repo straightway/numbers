@@ -254,7 +254,7 @@ class ArithmeticTest {
     fun comparison_greaterEqual() =
             testComparison { it[1] >= it[0] && it[0] >= it[0] }
 
-    //region Private
+    // region Private
 
     private class TestOpResult(val tester: TestOpResult.() -> Unit) {
         var expected: Int = 0
@@ -315,5 +315,5 @@ class ArithmeticTest {
                 BigDecimal("8.0"))
     }
 
-    //endregion
+    // endregion
 }
