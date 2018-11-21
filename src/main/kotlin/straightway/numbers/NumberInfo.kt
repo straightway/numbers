@@ -63,6 +63,7 @@ data class NumberInfo(
                     get(a).unifyIfPossible(result)
                 }
 
+        @Suppress("SwallowedException")
         private var types = mapOf(
                 Pair(Byte::class, NumberInfo(
                         prio = 0,
